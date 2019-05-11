@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "longitude": -1.553621,
+        "lattitude": 47.218371,
+        "description": "Nantes, FR"
+    },
+    {
+        "id": 2,
+        "longitude": -0.563166,
+        "lattitude": 47.478419,
+        "description": "Angers, FR"
+    },
+    {
+        "id": 3,
+        "longitude": -1.486466,
+        "lattitude": 47.269965,
+        "description": "Carquefou, FR"
+    }
+]
