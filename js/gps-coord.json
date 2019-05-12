@@ -1,20 +1,26 @@
 [
     {
         "id": 1,
-        "longitude": -1.553621,
-        "lattitude": 47.218371,
+        "longitude": -1.554136,
+        "lattitude": 47.218637,
         "description": "Nantes, FR"
     },
     {
         "id": 2,
-        "longitude": -1.177491,
-        "lattitude": 47.365464,
-        "description": "Ancenis, FR"
+        "longitude": -1.492123,
+        "lattitude": 47.297198,
+        "description": "Carquefou, FR"
     },
     {
         "id": 3,
-        "longitude": -1.486466,
-        "lattitude": 47.269965,
-        "description": "Carquefou, FR"
+        "longitude": -1.176174,
+        "lattitude": 47.365707,
+        "description": "Ancenis, FR"
+    },
+    {
+        "id": 4,
+        "longitude": -1.265565,
+        "lattitude": 47.161033,
+        "description": "Vallet, FR"
     }
 ]

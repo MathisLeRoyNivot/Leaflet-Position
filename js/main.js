@@ -1,34 +1,18 @@
-// let longitude = 51.5;
-// let lattitude = -0.09;
-
-// let longitude1 = 51.51;
-// let lattitude1 = -0.1;
-
-
-
-
-// L.marker([longitude, lattitude]).addTo(map)
-//     .bindPopup(`Position 1.<br> Lng. ${longitude} & Lat. ${lattitude}.`)
-//     .openPopup();
-
-
-// L.marker([longitude1, lattitude1]).addTo(map)
-//     .bindPopup(`Position 2.<br> Lng. ${longitude1} & Lat. ${lattitude1}.`)
-//     .openPopup();
-
 // Onload, execute the following code
 $(document).ready(() => {
 
-    let map = L.map('map-bloc').setView([46.2, 2.2], 6);
+    let map = L.map('map-bloc').setView([47.25, -1.40], 9.5);
 
     L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png', {
         attribution: '<a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a>',
         minZoom: 2,
         maxZoom: 15
     }).addTo(map);
-
+    
     $.getJSON("http://127.0.0.1:5500/js/gps-coord.json", function (json) {
-        
+
+        let latlngs = Array();
+            
         for (var key in json) {
             if (json.hasOwnProperty(key)) {
 
@@ -38,12 +22,44 @@ $(document).ready(() => {
                 let description = json[key].description;
 
                 L.marker([lattitude, longitude]).addTo(map)
-                    .bindPopup(`Position ${id}.<br> Lng. ${longitude} & Lat. ${lattitude}.<br>Lieux : ${description}`)
-                    // .openPopup();            
+                    .bindPopup(`<strong>Position #${id}<br>Longitude : </strong> ${longitude} & <strong>Lattitude : </strong> ${lattitude}<br><strong>Lieux : </strong> ${description}`)
+                    // .openPopup(); 
+
+                const newMarker = [lattitude, longitude];
+                // Push data collected in newMarker variable to the array
+                latlngs.push(newMarker);
             }
         }
 
-        console.log(json); // this will show the info it in firebug console
+        let polyline = L.polyline(latlngs, {
+            color: 'red'
+        }).addTo(map);
+
+        // zoom the map to the polyline
+        map.fitBounds(polyline.getBounds());
+
+        // Total distance sum
+        let totalDistance = 0;
+
+        for (var i = 0; i < latlngs.length - 1; i++) {
+            totalDistance += L.latLng(latlngs[i]).distanceTo(latlngs[i + 1]);
+        }
+
+        // Distance format
+        // If distance is under 1000m / 1km
+        if(totalDistance < 1000) {
+            // 2 decimal arround
+            totalDistance = totalDistance.toFixed(2);
+            document.getElementById('badge-distance').innerHTML = totalDistance;
+            document.getElementById('badge-distance-unit').innerHTML = "m";
+        } else {
+            // else if distance is above 1000m / 1km
+            totalDistance /= 1000;
+            // 3 decimal arround
+            totalDistance = totalDistance.toFixed(3);
+            document.getElementById('badge-distance').innerHTML = totalDistance;
+            document.getElementById('badge-distance-unit').innerHTML = "km";
+        }
     });
     
 })
