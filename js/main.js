@@ -12,17 +12,18 @@ $(document).ready(() => {
     $.getJSON("http://127.0.0.1:5500/js/gps-coord.json", function (json) {
 
         let latlngs = Array();
-            
+           
         for (var key in json) {
             if (json.hasOwnProperty(key)) {
 
                 let id = json[key].id;
                 let lattitude = json[key].lattitude;
                 let longitude = json[key].longitude;
+                let dateTime = json[key].datetime;
                 let description = json[key].description;
 
                 L.marker([lattitude, longitude]).addTo(map)
-                    .bindPopup(`<strong>Position #${id}<br>Longitude : </strong> ${longitude} & <strong>Lattitude : </strong> ${lattitude}<br><strong>Lieux : </strong> ${description}`)
+                    .bindPopup(`<strong>Position #${id}<br>Longitude : </strong> ${longitude} <strong> | Lattitude : </strong> ${lattitude}<br><strong>Lieux : </strong> ${description}<br><strong>Date : </strong> ${dateTime}`);
                     // .openPopup(); 
 
                 const newMarker = [lattitude, longitude];
@@ -32,7 +33,7 @@ $(document).ready(() => {
         }
 
         let polyline = L.polyline(latlngs, {
-            color: 'red'
+            color: 'blue'
         }).addTo(map);
 
         // zoom the map to the polyline
@@ -48,18 +49,28 @@ $(document).ready(() => {
         // Distance format
         // If distance is under 1000m / 1km
         if(totalDistance < 1000) {
-            // 2 decimal arround
+            // 2 decimal arround & display distance in meters
             totalDistance = totalDistance.toFixed(2);
             document.getElementById('badge-distance').innerHTML = totalDistance;
             document.getElementById('badge-distance-unit').innerHTML = "m";
         } else {
             // else if distance is above 1000m / 1km
             totalDistance /= 1000;
-            // 3 decimal arround
+            // 3 decimal arround & display distance in kilometers
             totalDistance = totalDistance.toFixed(3);
             document.getElementById('badge-distance').innerHTML = totalDistance;
             document.getElementById('badge-distance-unit').innerHTML = "km";
         }
+
+        document.getElementById("submitForm").addEventListener("click", removeLayers);
+
+        function removeLayers() {
+            map.removeLayers(latlngs)
+            map.removeLayers(polyline);
+            console.log("Layers successfully deleted");
+        }
     });
-    
-})
+
+    $('.datepicker').datepicker();
+
+});
