@@ -22,7 +22,8 @@ $(document).ready(() => {
                 let dateTime = json[key].datetime;
                 let description = json[key].description;
 
-                L.marker([lattitude, longitude]).addTo(map)
+                L.marker([lattitude, longitude])
+                    .addTo(map)
                     .bindPopup(`<strong>Position #${id}<br>Longitude : </strong> ${longitude} <strong> | Lattitude : </strong> ${lattitude}<br><strong>Lieux : </strong> ${description}<br><strong>Date : </strong> ${dateTime}`);
                     // .openPopup(); 
 
@@ -62,15 +63,80 @@ $(document).ready(() => {
             document.getElementById('badge-distance-unit').innerHTML = "km";
         }
 
-        document.getElementById("submitForm").addEventListener("click", removeLayers);
+
+
+        function checkInputs() {
+            
+            var isValid = true;
+            
+            $('input').filter('[required]').each(function() {
+                if ($(this).val() === '') {
+                    $('#confirm').prop('disabled', true);
+                    isValid = false;
+                    return false;
+                }
+            });
+            
+            if(isValid) {
+                $('#submitForm').prop('disabled', false);
+            }
+            return isValid;
+        }
+          
+        
+        $('#submitForm').click(function() {
+            if(checkInputs()) {
+                // function checkDate() {
+                // Recover input element values
+                var startDate = document.getElementById("start-date").value; 
+                var endDate = document.getElementById("end-date").value; 
+        
+                console.log("Start date : " + startDate + "\nEnd date : " + endDate);
+
+                let filteredByDateMarkers = [];
+                let fromTime = new Date(startDate).getTime();
+                let toTime = new Date(endDate).getTime();
+                    
+                let filteredDates = [];
+                let row; 
+                let date;
+
+                for (i in json) {
+
+                    row = json[i];
+                    date = new Date(row.datetime);
+
+                    if (date.getTime() >= fromTime && date.getTime() <= toTime) {
+                        filteredByDateMarkers.push(row);
+                    }
+                }
+
+                console.log("Markers filtered by date returned : " + filteredByDateMarkers.length);
+                console.log(filteredByDateMarkers);
+                // var results = document.querySelector("#results"); // debugging
+                // results.innerHTML = JSON.stringify(filteredByDateMarkers); // debugging
+                
+
+
+            } else {
+                console.log('Error');
+            }
+        });
+          
+        //Enable or disable button based on if inputs are filled or not
+        $('input').filter('[required]').on('keyup',function() {
+            checkInputs();
+        })
+        
+        checkInputs()
+        
+        // document.getElementById("submitForm").addEventListener("click", removeLayers);
 
         function removeLayers() {
-            map.removeLayers(latlngs)
-            map.removeLayers(polyline);
+            // map.removeLayers(latlngs)
+            // map.removeLayers(polyline);
             console.log("Layers successfully deleted");
         }
+
     });
-
-    $('.datepicker').datepicker();
-
 });

@@ -24,7 +24,7 @@
         <div id="control-bloc" class="col-4">
             <form class="pr-3 mt-5" method="get">
                 
-                <h3 class="mb-2">Time picker test</h3>
+                <!-- <h3 class="mb-2">Time picker test</h3>
                 <div class="form-group date" data-provide="datepicker">
                     <input type="text" class="form-control" placeholder="Date de début">
                     <div class="input-group-addon">
@@ -37,27 +37,29 @@
                     <div class="input-group-addon">
                         <span class="glyphicon glyphicon-th"></span>
                     </div>
-                </div>
+                </div> -->
 
                 <hr>
 
                 <h3 class="mb-2">Test 2</h3>
                 <div class="form-group">
                     <input type="text" id="start-date" class="form-control" name="startDate" placeholder="Date de début" aria-describedby="basic-addon1" required>
-                    <small id="emailHelp" class="form-text text-muted">Entrez dans le champs ci-dessus la date de début</small>
+                    <small id="start-date-help" class="form-text text-muted">Entrez dans le champs ci-dessus la date de début</small>
                 </div>
                 <div class="form-group">
                     <input type="text" id="end-date"class="form-control" name="endDate" placeholder="Date de fin" aria-describedby="basic-addon1" required>
-                    <small id="emailHelp" class="form-text text-muted">Entrez dans le champs ci-dessus la date de fin</small>
+                    <small id="end-date-help" class="form-text text-muted">Entrez dans le champs ci-dessus la date de fin</small>
                 </div>
 
                 <hr>
 
-                <button id="submitForm" type="submit" class="btn btn-primary">Appliquer</button>
+                <button id="submitForm" class="btn btn-primary" disabled>Appliquer</button>
             </form>
 
             <hr>
             <h4 class="mt-3">Distance : <span id="badge-distance" class="badge badge-info"></span><span id="badge-distance-unit">km</span></h4>
+
+            <div id="results"></div>
         </div>
     </div>
 
@@ -65,6 +67,7 @@
     <!-- <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script> -->
     <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script src="js/leaflet/leaflet.js"></script>
