@@ -2,6 +2,18 @@
 $(document).ready(() => {
 
     let map = L.map('map-bloc').setView([47.25, -1.40], 9.5);
+    let markerGroup = L.layerGroup();
+
+    let customIcon = L.icon({
+        iconUrl: '../styles/leaflet/images/marker-icon.png',
+        shadowUrl: '../styles/leaflet/images/marker-shadow.png',
+    
+        iconSize:     [25, 41], // size of the icon
+        shadowSize:   [50, 64], // size of the shadow
+        iconAnchor:   [12, 41], // point of the icon which will correspond to marker's location
+        shadowSize: [41, 41],  // the same for the shadow
+        popupAnchor:  [1, -34] // point from which the popup should open relative to the iconAnchor
+    });
 
     L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png', {
         attribution: '<a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a>',
@@ -11,7 +23,7 @@ $(document).ready(() => {
     
     $.getJSON("http://127.0.0.1:5500/js/gps-coord.json", function (json) {
 
-        let latlngs = Array();
+        let latLngs = Array();
            
         for (var key in json) {
             if (json.hasOwnProperty(key)) {
@@ -22,20 +34,24 @@ $(document).ready(() => {
                 let dateTime = json[key].datetime;
                 let description = json[key].description;
 
-                L.marker([lattitude, longitude])
+                L.marker([lattitude, longitude], {icon: customIcon})
                     .addTo(map)
+                    .addTo(markerGroup)
                     .bindPopup(`<strong>Position #${id}<br>Longitude : </strong> ${longitude} <strong> | Lattitude : </strong> ${lattitude}<br><strong>Lieux : </strong> ${description}<br><strong>Date : </strong> ${dateTime}`);
                     // .openPopup(); 
 
                 const newMarker = [lattitude, longitude];
                 // Push data collected in newMarker variable to the array
-                latlngs.push(newMarker);
+                latLngs.push(newMarker);
             }
         }
 
-        let polyline = L.polyline(latlngs, {
+        console.log(markerGroup);
+        
+        let polyline = L.polyline(latLngs, {
             color: 'blue'
-        }).addTo(map);
+        }).addTo(map).addTo(markerGroup);;
+
 
         // zoom the map to the polyline
         map.fitBounds(polyline.getBounds());
@@ -43,8 +59,8 @@ $(document).ready(() => {
         // Total distance sum
         let totalDistance = 0;
 
-        for (var i = 0; i < latlngs.length - 1; i++) {
-            totalDistance += L.latLng(latlngs[i]).distanceTo(latlngs[i + 1]);
+        for (let i = 0; i < latLngs.length - 1; i++) {
+            totalDistance += L.latLng(latLngs[i]).distanceTo(latLngs[i + 1]);
         }
 
         // Distance format
@@ -86,7 +102,6 @@ $(document).ready(() => {
         
         $('#submitForm').click(function() {
             if(checkInputs()) {
-                // function checkDate() {
                 // Recover input element values
                 var startDate = document.getElementById("start-date").value; 
                 var endDate = document.getElementById("end-date").value; 
@@ -97,7 +112,6 @@ $(document).ready(() => {
                 let fromTime = new Date(startDate).getTime();
                 let toTime = new Date(endDate).getTime();
                     
-                let filteredDates = [];
                 let row; 
                 let date;
 
@@ -113,11 +127,76 @@ $(document).ready(() => {
 
                 console.log("Markers filtered by date returned : " + filteredByDateMarkers.length);
                 console.log(filteredByDateMarkers);
-                // var results = document.querySelector("#results"); // debugging
-                // results.innerHTML = JSON.stringify(filteredByDateMarkers); // debugging
+                var results = document.querySelector("#form-results"); // debugging
+
+                if(filteredByDateMarkers.length === 0) {
+                    results.innerHTML = "Aucun marqueur à afficher. Essayez avec de nouvelles dates"
+                } else {
+                    results.innerHTML = JSON.stringify(filteredByDateMarkers); // debugging
+
+                    let customIconFiltered = L.icon({
+                        iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+                        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                        iconSize: [25, 41], // size of the icon
+                        shadowSize: [50, 64], // size of the shadow
+                        iconAnchor: [12, 41], // point of the icon which will correspond to marker's location
+                        shadowSize: [41, 41],  // the same for the shadow
+                        popupAnchor: [1, -34] // point from which the popup should open relative to the iconAnchor
+                    });
+
+                    let latLngsFiltered = Array();
+                    let markerGroupFiltered = L.layerGroup();
+
+                    for (let key in  filteredByDateMarkers) {
+
+                        let id = filteredByDateMarkers[key].id;
+                        let lattitude = filteredByDateMarkers[key].lattitude;
+                        let longitude = filteredByDateMarkers[key].longitude;
+                        let dateTime = filteredByDateMarkers[key].datetime;
+                        let description = filteredByDateMarkers[key].description;
+
+                        L.marker([lattitude, longitude], {icon: customIconFiltered})
+                            .addTo(map)
+                            .addTo(markerGroupFiltered)
+                            .bindPopup(`<strong>Position #${id}<br>Longitude : </strong> ${longitude} <strong> | Lattitude : </strong> ${lattitude}<br><strong>Lieux : </strong> ${description}<br><strong>Date : </strong> ${dateTime}`);
+                            // .openPopup(); 
+
+                        const newMarkerFiltered = [lattitude, longitude];
+                        // Push data collected in newMarker variable to the array
+                        latLngsFiltered.push(newMarkerFiltered);
+                        
+                        let polylineFiltered = L.polyline(latLngsFiltered, {
+                            color: 'red'
+                        }).addTo(map).addTo(markerGroupFiltered);;
+                    
+
+                        let totalDistanceFiltered = 0;
+
+                        for (let i = 0; i < latLngsFiltered.length - 1; i++) {
+                            totalDistanceFiltered += L.latLng(latLngsFiltered[i]).distanceTo(latLngsFiltered[i + 1]);
+                        }
+
+                        // Distance format
+                        // If distance is under 1000m / 1km
+                        if(totalDistanceFiltered < 1000) {
+                            // 2 decimal arround & display distance in meters
+                            totalDistanceFiltered = totalDistanceFiltered.toFixed(2);
+                            document.getElementById('badge-distance').innerHTML = totalDistanceFiltered;
+                            document.getElementById('badge-distance-unit').innerHTML = "m";
+                        } else {
+                            // else if distance is above 1000m / 1km
+                            totalDistanceFiltered /= 1000;
+                            // 3 decimal arround & display distance in kilometers
+                            totalDistanceFiltered = totalDistanceFiltered.toFixed(3);
+                            document.getElementById('badge-distance').innerHTML = totalDistanceFiltered;
+                            document.getElementById('badge-distance-unit').innerHTML = "km";
+                        }
+
+                    }
+                }
+
+                removeLayers();
                 
-
-
             } else {
                 console.log('Error');
             }
@@ -133,10 +212,13 @@ $(document).ready(() => {
         // document.getElementById("submitForm").addEventListener("click", removeLayers);
 
         function removeLayers() {
-            // map.removeLayers(latlngs)
-            // map.removeLayers(polyline);
-            console.log("Layers successfully deleted");
+            map.removeLayer(markerGroup);
         }
+        // function removeLayers() {
+        //     map.removeLayers(latlngs)
+        //     map.removeLayers(polyline);
+        //     console.log("Layers successfully deleted");
+        // }
 
     });
 });
