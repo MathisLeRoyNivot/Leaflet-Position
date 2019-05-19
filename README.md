@@ -31,5 +31,5 @@ You can add / modify data into the ```gps-coord.json``` file available into the 
 ## Contributor
 - [Mathis Le Roy-Nivot](https://github.com/MathisLeRoyNivot "Go to @MathisLeRoyNivot's Github")
 
-## Licence
+## License
 [MIT License](https://github.com/MathisLeRoyNivot/Leaflet-Position/blob/master/LICENSE), Mathis LE ROY-NIVOT 2019 ©
