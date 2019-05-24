@@ -1,6 +1,10 @@
-# Leaflet - Marker's Position & Distance
+<p align="center">
+<img src="https://leafletjs.com/docs/images/logo.png" height="120px" alt="Leaflet API Logo">
+</p>
 
-## Installation
+<h1 align="center">:round_pushpin: Leaflet - Marker's Position & Distance :round_pushpin:</h1>
+
+## Installation :gear:
 
 Clone this repository by taping this command in your CLI :
 
@@ -28,8 +32,8 @@ You can add / modify data into the ```gps-coord.json``` file available into the 
 }
 ```
 
-## Contributor
+## Contributor :computer:
 - [Mathis Le Roy-Nivot](https://github.com/MathisLeRoyNivot "Go to @MathisLeRoyNivot's Github")
 
-## License
-[MIT License](https://github.com/MathisLeRoyNivot/Leaflet-Position/blob/master/LICENSE), Mathis LE ROY-NIVOT 2019 ©
+## License :white_check_mark:
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/MathisLeRoyNivot/Leaflet-Position/blob/master/LICENSE), Mathis LE ROY-NIVOT 2019 ©
