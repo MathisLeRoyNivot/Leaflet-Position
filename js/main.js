@@ -102,6 +102,7 @@ $(document).ready(() => {
         
         $('#submitForm').click(function() {
             if(checkInputs()) {
+                removeLayers();
                 // Recover input element values
                 var startDate = document.getElementById("start-date").value; 
                 var endDate = document.getElementById("end-date").value; 
@@ -195,7 +196,7 @@ $(document).ready(() => {
                     }
                 }
 
-                removeLayers();
+                
                 
             } else {
                 console.log('Error');
@@ -212,7 +213,13 @@ $(document).ready(() => {
         // document.getElementById("submitForm").addEventListener("click", removeLayers);
 
         function removeLayers() {
-            map.removeLayer(markerGroup);
+            // map.removeLayer(markerGroup);
+            markerGroup.clearLayers();
+            console.log("Test suppression")
+            // clearGroup(map, markerGroup);
+            // map.eachLayer(function (markerGroup) {
+            //     map.removeLayer(markerGroup);
+            // });
         }
         // function removeLayers() {
         //     map.removeLayers(latlngs)
