@@ -2,7 +2,8 @@
 $(document).ready(() => {
 
     let map = L.map('map-bloc').setView([47.25, -1.40], 9.5);
-    let markerGroup = L.layerGroup();
+    let markerGroup = L.layerGroup().addTo(map);
+    let markerGroupFiltered = L.layerGroup().addTo(map);
 
     let customIcon = L.icon({
         iconUrl: '../styles/leaflet/images/marker-icon.png',
@@ -35,8 +36,8 @@ $(document).ready(() => {
                 let description = json[key].description;
 
                 L.marker([lattitude, longitude], {icon: customIcon})
-                    .addTo(map)
                     .addTo(markerGroup)
+                    // .addTo(map)
                     .bindPopup(`<strong>Position #${id}<br>Longitude : </strong> ${longitude} <strong> | Lattitude : </strong> ${lattitude}<br><strong>Lieux : </strong> ${description}<br><strong>Date : </strong> ${dateTime}`);
                     // .openPopup(); 
 
@@ -50,7 +51,8 @@ $(document).ready(() => {
         
         let polyline = L.polyline(latLngs, {
             color: 'blue'
-        }).addTo(map).addTo(markerGroup);;
+        }).addTo(markerGroup);
+        // .addTo(map)
 
 
         // zoom the map to the polyline
@@ -112,7 +114,6 @@ $(document).ready(() => {
                 let filteredByDateMarkers = [];
                 let fromTime = new Date(startDate).getTime();
                 let toTime = new Date(endDate).getTime();
-                console.log(fromTime + " " + toTime);
                     
                 let row; 
                 let date;
@@ -121,14 +122,13 @@ $(document).ready(() => {
 
                     row = json[i];
                     date = new Date(row.datetime);
-                    console.log(date);
 
                     if (date.getTime() >= fromTime && date.getTime() <= toTime) {
                         filteredByDateMarkers.push(row);
                     }
                 }
 
-                console.log("Markers filtered by date returned : " + filteredByDateMarkers.length);
+                console.log("No. of markers filtered by date returned : " + filteredByDateMarkers.length);
                 console.log(filteredByDateMarkers);
                 var results = document.querySelector("#form-results"); // debugging
 
@@ -148,7 +148,6 @@ $(document).ready(() => {
                     });
 
                     let latLngsFiltered = Array();
-                    let markerGroupFiltered = L.layerGroup();
 
                     for (let key in  filteredByDateMarkers) {
 
@@ -159,8 +158,8 @@ $(document).ready(() => {
                         let description = filteredByDateMarkers[key].description;
 
                         L.marker([lattitude, longitude], {icon: customIconFiltered})
-                            .addTo(map)
                             .addTo(markerGroupFiltered)
+                            // .addTo(map)
                             .bindPopup(`<strong>Position #${id}<br>Longitude : </strong> ${longitude} <strong> | Lattitude : </strong> ${lattitude}<br><strong>Lieux : </strong> ${description}<br><strong>Date : </strong> ${dateTime}`);
                             // .openPopup(); 
 
@@ -170,9 +169,9 @@ $(document).ready(() => {
                         
                         let polylineFiltered = L.polyline(latLngsFiltered, {
                             color: 'red'
-                        }).addTo(map).addTo(markerGroupFiltered);;
+                        }).addTo(markerGroupFiltered);
+                        // .addTo(map)
                     
-
                         let totalDistanceFiltered = 0;
 
                         for (let i = 0; i < latLngsFiltered.length - 1; i++) {
@@ -198,8 +197,6 @@ $(document).ready(() => {
                     }
                 }
 
-                
-                
             } else {
                 console.error('Error');
             }
@@ -217,7 +214,7 @@ $(document).ready(() => {
         function removeLayers() {
             // map.removeLayer(markerGroup);
             markerGroup.clearLayers();
-            console.log("Test suppression")
+            markerGroupFiltered.clearLayers();
             // clearGroup(map, markerGroup);
             // map.eachLayer(function (markerGroup) {
             //     map.removeLayer(markerGroup);
