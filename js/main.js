@@ -103,14 +103,15 @@ $(document).ready(() => {
         $('#submitForm').click(function() {
             if(checkInputs()) {
                 // Recover input element values
-                var startDate = document.getElementById("start-date").value; 
-                var endDate = document.getElementById("end-date").value; 
-        
+                let startDate = document.getElementById("start-date").value; 
+                let endDate = document.getElementById("end-date").value; 
+
                 console.log("Start date : " + startDate + "\nEnd date : " + endDate);
 
                 let filteredByDateMarkers = [];
                 let fromTime = new Date(startDate).getTime();
                 let toTime = new Date(endDate).getTime();
+                console.log(fromTime + " " + toTime);
                     
                 let row; 
                 let date;
@@ -119,6 +120,7 @@ $(document).ready(() => {
 
                     row = json[i];
                     date = new Date(row.datetime);
+                    console.log(date);
 
                     if (date.getTime() >= fromTime && date.getTime() <= toTime) {
                         filteredByDateMarkers.push(row);
@@ -130,7 +132,7 @@ $(document).ready(() => {
                 var results = document.querySelector("#form-results"); // debugging
 
                 if(filteredByDateMarkers.length === 0) {
-                    results.innerHTML = "Aucun marqueur à afficher. Essayez avec de nouvelles dates"
+                    results.innerHTML = "Aucun marqueur à afficher. Essayez avec de nouvelles dates."
                 } else {
                     results.innerHTML = JSON.stringify(filteredByDateMarkers); // debugging
 
@@ -198,7 +200,7 @@ $(document).ready(() => {
                 removeLayers();
                 
             } else {
-                console.log('Error');
+                console.error('Error');
             }
         });
           
