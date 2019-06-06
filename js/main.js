@@ -1,7 +1,7 @@
 // Onload, execute the following code
 $(document).ready(() => {
 
-    // $(function () {
+    $(function () {
         $('#datetimepicker-start').datetimepicker({
             format: 'YYYY-MM-DD HH:mm:ss',
             locale: 'fr',
@@ -10,19 +10,15 @@ $(document).ready(() => {
         $('#datetimepicker-end').datetimepicker({
             format: 'YYYY-MM-DD HH:mm:ss',
             locale: 'fr',
-            useCurrent: false //Important! See issue #1075
+            useCurrent: false
         });
         $("#datetimepicker-start").on("dp.change", function (e) {
             $("#datetimepicker-end").data("DateTimePicker").minDate(e.date);
-            let dateStartPicker =  $("#datetimepicker-start").data("DateTimePicker").date;
-            console.log(dateStartPicker);
         });
         $("#datetimepicker-end").on("dp.change", function (e) {
             $('#datetimepicker-start').data("DateTimePicker").maxDate(e.date);
-            let dateEndPicker = document.getElementById("datetimepicker-end").value;
-            console.log(dateEndPicker);
         });
-    // });
+    });
 
     let map = L.map('map-bloc').setView([47.25, -1.40], 9.5);
     let markerGroup = L.layerGroup().addTo(map);
