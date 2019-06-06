@@ -4,6 +4,17 @@
 
 <h1 align="center">:round_pushpin: Leaflet - Marker's Position & Distance :round_pushpin:</h1>
 
+## Project overview
+<p align="center">
+  <img width="70%" src="./docs/home.png">
+</p>
+<p align="center">
+  <img width="70%" src="./docs/choose-dates.png">
+</p>
+<p align="center">
+  <img width="70%" src="./docs/search-markers.png">
+</p>
+
 ## Installation :gear:
 
 Clone this repository by taping this command in your CLI :
