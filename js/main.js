@@ -1,6 +1,21 @@
 // Onload, execute the following code
 $(document).ready(() => {
 
+    $(function () {
+        $('#datetimepicker-start').datetimepicker();
+        $('#datetimepicker-end').datetimepicker({
+            locale: 'fr',
+            useCurrent: false //Important! See issue #1075
+    
+        });
+        $("#datetimepicker-start").on("dp.change", function (e) {
+            $('#datetimepicker-end').data("DateTimePicker").minDate(e.date);
+        });
+        $("#datetimepicker-end").on("dp.change", function (e) {
+            $('#datetimepicker-start').data("DateTimePicker").maxDate(e.date);
+        });
+    });
+
     let map = L.map('map-bloc').setView([47.25, -1.40], 9.5);
     let markerGroup = L.layerGroup().addTo(map);
     let markerGroupFiltered = L.layerGroup().addTo(map);
@@ -193,7 +208,6 @@ $(document).ready(() => {
                             document.getElementById('badge-distance').innerHTML = totalDistanceFiltered;
                             document.getElementById('badge-distance-unit').innerHTML = "km";
                         }
-
                     }
                 }
 
@@ -208,7 +222,6 @@ $(document).ready(() => {
         })
         
         checkInputs()
-        
         // document.getElementById("submitForm").addEventListener("click", removeLayers);
 
         function removeLayers() {
@@ -220,11 +233,6 @@ $(document).ready(() => {
             //     map.removeLayer(markerGroup);
             // });
         }
-        // function removeLayers() {
-        //     map.removeLayers(latlngs)
-        //     map.removeLayers(polyline);
-        //     console.log("Layers successfully deleted");
-        // }
 
     });
 });
