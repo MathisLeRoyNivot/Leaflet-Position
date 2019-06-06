@@ -1,20 +1,28 @@
 // Onload, execute the following code
 $(document).ready(() => {
 
-    $(function () {
-        $('#datetimepicker-start').datetimepicker();
+    // $(function () {
+        $('#datetimepicker-start').datetimepicker({
+            format: 'YYYY-MM-DD HH:mm:ss',
+            locale: 'fr',
+            useCurrent: true
+        });
         $('#datetimepicker-end').datetimepicker({
+            format: 'YYYY-MM-DD HH:mm:ss',
             locale: 'fr',
             useCurrent: false //Important! See issue #1075
-    
         });
         $("#datetimepicker-start").on("dp.change", function (e) {
-            $('#datetimepicker-end').data("DateTimePicker").minDate(e.date);
+            $("#datetimepicker-end").data("DateTimePicker").minDate(e.date);
+            let dateStartPicker =  $("#datetimepicker-start").data("DateTimePicker").date;
+            console.log(dateStartPicker);
         });
         $("#datetimepicker-end").on("dp.change", function (e) {
             $('#datetimepicker-start').data("DateTimePicker").maxDate(e.date);
+            let dateEndPicker = document.getElementById("datetimepicker-end").value;
+            console.log(dateEndPicker);
         });
-    });
+    // });
 
     let map = L.map('map-bloc').setView([47.25, -1.40], 9.5);
     let markerGroup = L.layerGroup().addTo(map);
@@ -121,8 +129,10 @@ $(document).ready(() => {
             if(checkInputs()) {
                 removeLayers();
                 // Recover input element values
-                let startDate = document.getElementById("start-date").value; 
-                let endDate = document.getElementById("end-date").value; 
+                // let startDate = document.getElementById("datetimepicker-start").value; 
+                let startDate = $("#datetimepicker-start").data("DateTimePicker").date();
+                // let endDate = document.getElementById("datetimepicker-end").value; 
+                let endDate = $("#datetimepicker-end").data("DateTimePicker").date();
 
                 console.log("Start date : " + startDate + "\nEnd date : " + endDate);
 

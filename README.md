@@ -36,4 +36,4 @@ You can add / modify data into the ```gps-coord.json``` file available into the 
 - [Mathis Le Roy-Nivot](https://github.com/MathisLeRoyNivot "Go to @MathisLeRoyNivot's Github")
 
 ## License :white_check_mark:
-[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/MathisLeRoyNivot/Leaflet-Position/blob/master/LICENSE), Mathis LE ROY-NIVOT 2019 ©
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/MathisLeRoyNivot/Leaflet-Position/blob/master/LICENSE) Mathis LE ROY-NIVOT 2019 ©

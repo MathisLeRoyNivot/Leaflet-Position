@@ -3,23 +3,24 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta content="text/html; charset=UTF-8; X-Content-Type-Options=nosniff" http-equiv="Content-Type" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" />
+    
+
     <link rel="stylesheet" href="styles/main.css">
     <!-- Leaflet Off-line mode -->
     <link rel="stylesheet" href="styles/leaflet/leaflet.css">
     <!-- Leaflet Online mode -->
     <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/> -->
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" />
     
     <title>Leaflet - 1st Objective</title>
 </head>
@@ -33,9 +34,15 @@
         <div id="control-bloc" class="col-4">
             <div class="pr-3 mt-5">
 
+                
+                <hr>
+                
+                <h4 class="mb-2">Choisir les dates</h4>
+                <p>Saisissez les dates de début et de fin</p>
+                
                 <div class="form-group">
                     <div class="input-group date" id="datetimepicker-start">
-                        <input type="text" placeholder="Date de début" class="form-control" placeholder="Date de début" />
+                        <input type="text" class="form-control" placeholder="Date de début" required/>
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
@@ -44,25 +51,21 @@
 
                 <div class="form-group">
                     <div class="input-group date" id='datetimepicker-end'>
-                        <input type="text" class="form-control" placeholder="Date de fin">
+                        <input type="text" class="form-control" placeholder="Date de fin" required>
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
                     </div>
                 </div>
-                
-                <hr>
 
-                <h4 class="mb-2">Choisir les dates</h4>
-                <p>Saisissez les dates de début et de fin</p>
-                <div class="form-group">
-                    <input type="text" id="start-date" class="form-control" name="startDate" placeholder="Date de début" aria-describedby="basic-addon1" required>
+                <!-- <div class="form-group">
+                    <input type="text" id="start-date" class="form-control" name="startDate" placeholder="Date de début" aria-describedby="basic-addon1">
                     <small id="start-date-help" class="form-text text-muted">Entrez dans le champs ci-dessus la date de début</small>
                 </div>
                 <div class="form-group">
-                    <input type="text" id="end-date"class="form-control" name="endDate" placeholder="Date de fin" aria-describedby="basic-addon1" required>
+                    <input type="text" id="end-date"class="form-control" name="endDate" placeholder="Date de fin" aria-describedby="basic-addon1">
                     <small id="end-date-help" class="form-text text-muted">Entrez dans le champs ci-dessus la date de fin</small>
-                </div>
+                </div> -->
 
                 <hr>
 
@@ -77,18 +80,21 @@
     </div>
 
     <!-- SCRIPTS CALLING -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
     
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/fr.js"></script>
+    
+    <script src="js/jquery/jquery-3.4.1.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    
+    
 
     <script src="js/leaflet/leaflet.js"></script>
-    <script src="js/jquery/jquery-3.4.1.js"></script>
     <script src="js/main.js"></script>
 
 </body>
