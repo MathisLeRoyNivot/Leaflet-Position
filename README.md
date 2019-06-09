@@ -38,7 +38,7 @@ You can add / modify data into the ```gps-coord.json``` file available into the 
     "id": <ID>,
     "lattitude": <Lattitude>,
     "longitude": <Longitude>,
-    "datetime": "<Date YYYY-MM-DD HH:MM:ss>", 
+    "datetime": "<YYYY-MM-DD HH:MM:ss>", 
     "description": "<Description>"
 }
 ```
