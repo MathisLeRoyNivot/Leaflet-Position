@@ -1,0 +1,26 @@
+{
+  "name": "leaflet-position",
+  "version": "1.0.0",
+  "description": "<p align=\"center\"> <img src=\"https://leafletjs.com/docs/images/logo.png\" height=\"120px\" alt=\"Leaflet API Logo\"> </p>",
+  "main": "server.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MathisLeRoyNivot/Leaflet-Position.git"
+  },
+  "author": "LE ROY-NIVOT Mathis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MathisLeRoyNivot/Leaflet-Position/issues"
+  },
+  "homepage": "https://github.com/MathisLeRoyNivot/Leaflet-Position#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "yargs": "^13.2.4"
+  }
+}

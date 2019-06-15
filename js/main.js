@@ -1,35 +1,38 @@
+import port from '../server';
+
 // Onload, execute the following code
 $(document).ready(() => {
 
-    $(function () {
-        $('#datetimepicker-start').datetimepicker({
-            format: 'YYYY-MM-DD HH:mm:ss',
-            locale: 'fr',
-            useCurrent: true
-        });
-        $('#datetimepicker-end').datetimepicker({
-            format: 'YYYY-MM-DD HH:mm:ss',
-            locale: 'fr',
-            useCurrent: false
-        });
-        $("#datetimepicker-start").on("dp.change", function (e) {
-            $("#datetimepicker-end").data("DateTimePicker").minDate(e.date);
-        });
-        $("#datetimepicker-end").on("dp.change", function (e) {
-            $('#datetimepicker-start').data("DateTimePicker").maxDate(e.date);
-        });
+    // Date time picker
+    const dtpStart = $('#datetimepicker-start');
+    const dtpEnd = $('#datetimepicker-end');
+
+    dtpStart.datetimepicker({
+        format: 'YYYY-MM-DD HH:mm:ss',
+        locale: 'fr',
+        useCurrent: true
+    });
+    dtpEnd.datetimepicker({
+        format: 'YYYY-MM-DD HH:mm:ss',
+        locale: 'fr',
+        useCurrent: false
+    });
+    dtpStart.on("dp.change", function (e) {
+        dtpEnd.data("DateTimePicker").minDate(e.date);
+    });
+    dtpEnd.on("dp.change", function (e) {
+        dtpStart.data("DateTimePicker").maxDate(e.date);
     });
 
+    // Leaflet Map
     let map = L.map('map-bloc').setView([47.25, -1.40], 9.5);
     let markerGroup = L.layerGroup().addTo(map);
     let markerGroupFiltered = L.layerGroup().addTo(map);
 
-    let customIcon = L.icon({
+    const customIcon = L.icon({
         iconUrl: '../styles/leaflet/images/marker-icon.png',
         shadowUrl: '../styles/leaflet/images/marker-shadow.png',
-    
         iconSize:     [25, 41], // size of the icon
-        shadowSize:   [50, 64], // size of the shadow
         iconAnchor:   [12, 41], // point of the icon which will correspond to marker's location
         shadowSize: [41, 41],  // the same for the shadow
         popupAnchor:  [1, -34] // point from which the popup should open relative to the iconAnchor
@@ -41,11 +44,11 @@ $(document).ready(() => {
         maxZoom: 15
     }).addTo(map);
     
-    $.getJSON("http://127.0.0.1:5500/js/gps-coord.json", function (json) {
+    $.getJSON(`http://localhost:${port}/api/coords`, function (json) {
 
         let latLngs = Array();
            
-        for (var key in json) {
+        for (let key in json) {
             if (json.hasOwnProperty(key)) {
 
                 let id = json[key].id;
@@ -63,10 +66,12 @@ $(document).ready(() => {
                 const newMarker = [lattitude, longitude];
                 // Push data collected in newMarker variable to the array
                 latLngs.push(newMarker);
+            } else {
+                console.error("Erreur lors du chargement des données");
             }
         }
 
-        console.log(markerGroup);
+        console.debug(markerGroup);
         
         let polyline = L.polyline(latLngs, {
             color: 'blue'
@@ -104,7 +109,7 @@ $(document).ready(() => {
 
         function checkInputs() {
             
-            var isValid = true;
+            let isValid = true;
             
             $('input').filter('[required]').each(function() {
                 if ($(this).val() === '') {
@@ -125,10 +130,8 @@ $(document).ready(() => {
             if(checkInputs()) {
                 removeLayers();
                 // Recover input element values
-                // let startDate = document.getElementById("datetimepicker-start").value; 
-                let startDate = $("#datetimepicker-start").data("DateTimePicker").date();
-                // let endDate = document.getElementById("datetimepicker-end").value; 
-                let endDate = $("#datetimepicker-end").data("DateTimePicker").date();
+                let startDate = dtpStart.data("DateTimePicker").date();
+                let endDate = dtpEnd.data("DateTimePicker").date();
 
                 console.log("Start date : " + startDate + "\nEnd date : " + endDate);
 
@@ -140,29 +143,26 @@ $(document).ready(() => {
                 let date;
 
                 for (i in json) {
-
                     row = json[i];
                     date = new Date(row.datetime);
-
                     if (date.getTime() >= fromTime && date.getTime() <= toTime) {
                         filteredByDateMarkers.push(row);
                     }
                 }
 
-                console.log("No. of markers filtered by date returned : " + filteredByDateMarkers.length);
-                console.log(filteredByDateMarkers);
-                var results = document.querySelector("#form-results"); // debugging
+                console.debug("No. of markers filtered by date returned : " + filteredByDateMarkers.length);
+                console.debug(filteredByDateMarkers);
+                const results = document.querySelector("#form-results"); // debugging
 
                 if(filteredByDateMarkers.length === 0) {
                     results.innerHTML = "Aucun marqueur à afficher. Essayez avec de nouvelles dates."
                 } else {
                     results.innerHTML = JSON.stringify(filteredByDateMarkers); // debugging
 
-                    let customIconFiltered = L.icon({
+                    const customIconFiltered = L.icon({
                         iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
                         shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
                         iconSize: [25, 41], // size of the icon
-                        shadowSize: [50, 64], // size of the shadow
                         iconAnchor: [12, 41], // point of the icon which will correspond to marker's location
                         shadowSize: [41, 41],  // the same for the shadow
                         popupAnchor: [1, -34] // point from which the popup should open relative to the iconAnchor
@@ -228,7 +228,6 @@ $(document).ready(() => {
         })
         
         checkInputs()
-        // document.getElementById("submitForm").addEventListener("click", removeLayers);
 
         function removeLayers() {
             // map.removeLayer(markerGroup);
@@ -239,6 +238,5 @@ $(document).ready(() => {
             //     map.removeLayer(markerGroup);
             // });
         }
-
     });
 });
