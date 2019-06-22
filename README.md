@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://leafletjs.com/docs/images/logo.png" height="120px" alt="Leaflet API Logo">
+<img src="https://leafletjs.com/docs/images/logo.png" height="110px" alt="Leaflet API Logo">
 </p>
 
 <h1 align="center">:round_pushpin: Leaflet - Marker's Position & Distance :round_pushpin:</h1>
@@ -27,11 +27,22 @@ Or download the project.
 
 ## Testing phase
 
-The only thing you will need is to launch your server locally and enjoy this little platform.
+To test this plaform, first make sure you have already download Node.JS. If this is not the case, download [**Node.JS**](https://nodejs.org/en/) and follow the instructions. <br>
+Then launch the server by typing the following command : 
+```bash
+node server.js
+```
+
+And then, enjoy the platform by clicking the following link : 
+```bash
+Server is running on port : 3000  
+You can routing to the server at the following address : http://localhost:3000/  
+The API is available at the following address : http://localhost:3000/api/coords 
+```
 
 ## JSON File data
 
-You can add / modify data into the ```gps-coord.json``` file available into the JS folder like the following pattern.
+You can add / modify data into the *```gps-coord.json```* file available into the JS folder like the following pattern.
 
 ```json
 {
