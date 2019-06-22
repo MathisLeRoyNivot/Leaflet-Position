@@ -1,5 +1,3 @@
-import port from '../server';
-
 // Onload, execute the following code
 $(document).ready(() => {
 
@@ -30,8 +28,8 @@ $(document).ready(() => {
     let markerGroupFiltered = L.layerGroup().addTo(map);
 
     const customIcon = L.icon({
-        iconUrl: '../styles/leaflet/images/marker-icon.png',
-        shadowUrl: '../styles/leaflet/images/marker-shadow.png',
+        iconUrl: '/leaflet/images/marker-icon.png',
+        shadowUrl: '/leaflet/images/marker-shadow.png',
         iconSize:     [25, 41], // size of the icon
         iconAnchor:   [12, 41], // point of the icon which will correspond to marker's location
         shadowSize: [41, 41],  // the same for the shadow
@@ -44,7 +42,7 @@ $(document).ready(() => {
         maxZoom: 15
     }).addTo(map);
     
-    $.getJSON(`http://localhost:${port}/api/coords`, function (json) {
+    $.getJSON(`http://localhost:3000/api/coords`, function (json) {
 
         let latLngs = Array();
            

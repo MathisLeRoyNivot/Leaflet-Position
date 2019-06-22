@@ -12,6 +12,9 @@ app.use(bodyParser.json());
 const styles = path.join(__dirname, '../' + 'styles');
 app.use(express.static(styles));
 
+const js = path.join(__dirname, '../' + 'js');
+app.use(express.static(js));
+
 // --------- GET METHODS ---------
 // Generating the home page
 const getHomePage = app.get('/', (req, res) => {
