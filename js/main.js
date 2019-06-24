@@ -71,6 +71,11 @@ $(document).ready(() => {
         let polyline = L.polyline(latLngs, {
             color: 'blue'
         }).addTo(markerGroup);
+        // var decorator = L.polylineDecorator(polyline, {
+        //     patterns: [
+        //         {offset: '100%', repeat: 0, symbol: L.Symbol.arrowHead({pixelSize: 15, polygon: false, pathOptions: {stroke: true}})}
+        //     ]
+        // }).addTo(markerGroup);
         // .addTo(map)
 
 
@@ -191,6 +196,15 @@ $(document).ready(() => {
                         let polylineFiltered = L.polyline(latLngsFiltered, {
                             color: 'red'
                         }).addTo(markerGroupFiltered);
+                        // var decorator = L.polylineDecorator(polyline, {
+                        //     patterns: [
+                        //         // defines a pattern of 10px-wide dashes, repeated every 20px on the line
+                        //         {
+                        //             offset: '100%', 
+                        //             repeat: 0, 
+                        //             symbol: L.Symbol.arrowHead({pixelSize: 15, polygon: false, pathOptions: {stroke: true}})}
+                        //     ]
+                        // }).addTo(markerGroupFiltered);
                         // .addTo(map)
                     
                         let totalDistanceFiltered = 0;
@@ -228,16 +242,10 @@ $(document).ready(() => {
         })
         
         checkInputs()
-        // document.getElementById("submitForm").addEventListener("click", removeLayers);
 
         function removeLayers() {
-            // map.removeLayer(markerGroup);
             markerGroup.clearLayers();
             markerGroupFiltered.clearLayers();
-            // clearGroup(map, markerGroup);
-            // map.eachLayer(function (markerGroup) {
-            //     map.removeLayer(markerGroup);
-            // });
         }
 
     });
