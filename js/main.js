@@ -16,6 +16,28 @@ dtpEnd.datetimepicker({
     useCurrent: false
 });
 
+// Initialize leaflet map
+let map = L.map('map-bloc').setView([47.25, -1.40], 9.5);
+let markerGroup = L.layerGroup().addTo(map);
+let markerGroupFiltered = L.layerGroup().addTo(map);
+
+const customIcon = L.icon({
+    iconUrl: '/leaflet/images/marker-icon.png',
+    shadowUrl: '/leaflet/images/marker-shadow.png',
+    iconSize:     [25, 41],
+    iconAnchor:   [12, 41], 
+    shadowSize: [41, 41],
+    popupAnchor:  [1, -34]
+});
+
+const customIconFiltered = L.icon({
+    iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    shadowSize: [41, 41],
+    popupAnchor: [1, -34]
+});
 
 // Onload, execute the following code
 $(document).ready(() => {
@@ -28,18 +50,8 @@ $(document).ready(() => {
     });
 
     // Leaflet Map
-    let map = L.map('map-bloc').setView([47.25, -1.40], 9.5);
-    let markerGroup = L.layerGroup().addTo(map);
-    let markerGroupFiltered = L.layerGroup().addTo(map);
-
-    const customIcon = L.icon({
-        iconUrl: '/leaflet/images/marker-icon.png',
-        shadowUrl: '/leaflet/images/marker-shadow.png',
-        iconSize:     [25, 41], // size of the icon
-        iconAnchor:   [12, 41], // point of the icon which will correspond to marker's location
-        shadowSize: [41, 41],  // the same for the shadow
-        popupAnchor:  [1, -34] // point from which the popup should open relative to the iconAnchor
-    });
+    // let markerGroup = L.layerGroup().addTo(map);
+    // let markerGroupFiltered = L.layerGroup().addTo(map);
 
     L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png', {
         attribution: '<a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a>',
@@ -113,8 +125,6 @@ $(document).ready(() => {
             document.getElementById('badge-distance-unit').innerHTML = "km";
         }
 
-
-
         function checkInputs() {
             
             let isValid = true;
@@ -167,15 +177,6 @@ $(document).ready(() => {
                 } else {
                     results.innerHTML = JSON.stringify(filteredByDateMarkers); // debugging
 
-                    const customIconFiltered = L.icon({
-                        iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
-                        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-                        iconSize: [25, 41], // size of the icon
-                        iconAnchor: [12, 41], // point of the icon which will correspond to marker's location
-                        shadowSize: [41, 41],  // the same for the shadow
-                        popupAnchor: [1, -34] // point from which the popup should open relative to the iconAnchor
-                    });
-
                     let latLngsFiltered = Array();
 
                     for (let key in  filteredByDateMarkers) {
@@ -216,21 +217,24 @@ $(document).ready(() => {
                             totalDistanceFiltered += L.latLng(latLngsFiltered[i]).distanceTo(latLngsFiltered[i + 1]);
                         }
 
-                        // Distance format
-                        // If distance is under 1000m / 1km
-                        if(totalDistanceFiltered < 1000) {
-                            // 2 decimal arround & display distance in meters
-                            totalDistanceFiltered = totalDistanceFiltered.toFixed(2);
-                            document.getElementById('badge-distance').innerHTML = totalDistanceFiltered;
-                            document.getElementById('badge-distance-unit').innerHTML = "m";
-                        } else {
-                            // else if distance is above 1000m / 1km
-                            totalDistanceFiltered /= 1000;
-                            // 3 decimal arround & display distance in kilometers
-                            totalDistanceFiltered = totalDistanceFiltered.toFixed(3);
-                            document.getElementById('badge-distance').innerHTML = totalDistanceFiltered;
-                            document.getElementById('badge-distance-unit').innerHTML = "km";
+                        function resultFormat() {
+                            // Distance format
+                            // If distance is under 1000m / 1km
+                            if(totalDistanceFiltered < 1000) {
+                                // 2 decimal arround & display distance in meters
+                                totalDistanceFiltered = totalDistanceFiltered.toFixed(2);
+                                document.getElementById('badge-distance').innerHTML = totalDistanceFiltered;
+                                document.getElementById('badge-distance-unit').innerHTML = "m";
+                            } else {
+                                // else if distance is above 1000m / 1km
+                                totalDistanceFiltered /= 1000;
+                                // 3 decimal arround & display distance in kilometers
+                                totalDistanceFiltered = totalDistanceFiltered.toFixed(3);
+                                document.getElementById('badge-distance').innerHTML = totalDistanceFiltered;
+                                document.getElementById('badge-distance-unit').innerHTML = "km";
+                            }
                         }
+                        resultFormat();
                     }
                 }
 
@@ -246,12 +250,13 @@ $(document).ready(() => {
         
         checkInputs()
 
-        function removeLayers() {
-            markerGroup.clearLayers();
-            markerGroupFiltered.clearLayers();
-        }
     });
 });
+
+function removeLayers() {
+    markerGroup.clearLayers();
+    markerGroupFiltered.clearLayers();
+}
 
 // Reset button
 $("#resetBtn").click(function() {
