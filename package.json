@@ -1,8 +1,8 @@
 {
   "name": "leaflet-position",
   "version": "1.0.0",
-  "description": "<p align=\"center\">\r <img src=\"https://leafletjs.com/docs/images/logo.png\" height=\"120px\" alt=\"Leaflet API Logo\">\r </p>",
-  "main": "index.js",
+  "description": "<p align=\"center\"> <img src=\"https://leafletjs.com/docs/images/logo.png\" height=\"120px\" alt=\"Leaflet API Logo\"> </p>",
+  "main": "server.js",
   "directories": {
     "doc": "docs"
   },
@@ -14,12 +14,14 @@
     "url": "git+https://github.com/MathisLeRoyNivot/Leaflet-Position.git"
   },
   "author": "LE ROY-NIVOT Mathis",
-  "license": "MIT",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/MathisLeRoyNivot/Leaflet-Position/issues"
   },
   "homepage": "https://github.com/MathisLeRoyNivot/Leaflet-Position#readme",
   "dependencies": {
-    "leaflet-polylinedecorator": "^1.6.0"
+    "leaflet-polylinedecorator": "^1.6.0",
+    "express": "^4.17.1",
+    "yargs": "^13.2.4"
   }
 }
