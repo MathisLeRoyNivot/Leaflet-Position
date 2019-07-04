@@ -230,26 +230,27 @@ $(document).ready(() => {
                             color: 'red'
                         }).addTo(markerGroupFiltered);
                         
-                        L.polylineDecorator(polylineFiltered, {
-                            patterns: [
-                                {
-                                    offset: 0, 
-                                    repeat: 75, 
-                                    symbolOffset: 10, 
-                                    symbol: L.Symbol.arrowHead({
-                                        polygon: false,
-                                        headAngle: 45,
-                                        pixelSize: 15,
-                                        pathOptions: {
-                                            opacity: 1, 
-                                            weight: 2, 
-                                            stroke: true, 
-                                            color:'#000000'
-                                        }
-                                    })
-                                }
-                            ]
-                        }).addTo(markerGroupFiltered);
+                        // /!\ code to fix /!\
+                        // L.polylineDecorator(polylineFiltered, {
+                        //     patterns: [
+                        //         {
+                        //             offset: 0, 
+                        //             repeat: 75, 
+                        //             symbolOffset: 10, 
+                        //             symbol: L.Symbol.arrowHead({
+                        //                 polygon: false,
+                        //                 headAngle: 45,
+                        //                 pixelSize: 15,
+                        //                 pathOptions: {
+                        //                     opacity: 1, 
+                        //                     weight: 2, 
+                        //                     stroke: true, 
+                        //                     color:'#000000'
+                        //                 }
+                        //             })
+                        //         }
+                        //     ]
+                        // }).addTo(markerGroupFiltered);
 
                     
                         let totalDistanceFiltered = 0;
@@ -290,7 +291,7 @@ $(document).ready(() => {
 });
 
 function removeLayers() {
-    markerGroup.clearLayers();
+    markerGroup.clearLayers();  
     markerGroupFiltered.clearLayers();
 }
 
