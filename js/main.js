@@ -41,6 +41,9 @@ const customIconFiltered = L.icon({
 
 // Onload, execute the following code
 $(document).ready(() => {
+
+    inputDtpStart.val('');
+    inputDtpEnd.val('');
     
     dtpStart.on("dp.change", function (e) {
         dtpEnd.data("DateTimePicker").minDate(e.date);
@@ -160,13 +163,24 @@ $(document).ready(() => {
                 let row; 
                 let date;
 
-                for (i in json) {
-                    row = json[i];
-                    date = new Date(row.datetime);
-                    if (date.getTime() >= fromTime && date.getTime() <= toTime) {
-                        filteredByDateMarkers.push(row);
+                for (let row in json) {
+                    if (json.hasOwnProperty(row)) {
+                        let rowData = json[row];
+                        let dateTime = json[row].datetime;
+                        date = new Date(dateTime);
+                        if (date.getTime() >= fromTime && date.getTime() <= toTime) {
+                            filteredByDateMarkers.push(rowData);
+                        }
                     }
                 }
+
+                // for (i in json) {
+                //     row = json[i];
+                //     date = new Date(row.datetime);
+                //     if (date.getTime() >= fromTime && date.getTime() <= toTime) {
+                //         filteredByDateMarkers.push(row);
+                //     }
+                // }
 
                 console.debug("No. of markers filtered by date returned : " + filteredByDateMarkers.length);
                 console.debug(filteredByDateMarkers);
@@ -175,7 +189,8 @@ $(document).ready(() => {
                 if(filteredByDateMarkers.length === 0) {
                     results.innerHTML = "Aucun marqueur à afficher. Essayez avec de nouvelles dates."
                 } else {
-                    results.innerHTML = JSON.stringify(filteredByDateMarkers); // debugging
+                    // results.innerHTML = JSON.stringify(filteredByDateMarkers); // debugging
+                    results.innerHTML = filteredByDateMarkers.length + " position(s) trouvée(s)"; // debugging
 
                     let latLngsFiltered = Array();
 
