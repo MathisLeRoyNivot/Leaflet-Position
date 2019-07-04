@@ -218,17 +218,12 @@ $(document).ready(() => {
                         }
 
                         function resultFormat() {
-                            // Distance format
-                            // If distance is under 1000m / 1km
                             if(totalDistanceFiltered < 1000) {
-                                // 2 decimal arround & display distance in meters
                                 totalDistanceFiltered = totalDistanceFiltered.toFixed(2);
                                 document.getElementById('badge-distance').innerHTML = totalDistanceFiltered;
                                 document.getElementById('badge-distance-unit').innerHTML = "m";
                             } else {
-                                // else if distance is above 1000m / 1km
                                 totalDistanceFiltered /= 1000;
-                                // 3 decimal arround & display distance in kilometers
                                 totalDistanceFiltered = totalDistanceFiltered.toFixed(3);
                                 document.getElementById('badge-distance').innerHTML = totalDistanceFiltered;
                                 document.getElementById('badge-distance-unit').innerHTML = "km";
