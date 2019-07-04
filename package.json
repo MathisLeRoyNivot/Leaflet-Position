@@ -20,8 +20,8 @@
   },
   "homepage": "https://github.com/MathisLeRoyNivot/Leaflet-Position#readme",
   "dependencies": {
-    "leaflet-polylinedecorator": "^1.6.0",
     "express": "^4.17.1",
+    "leaflet-polylinedecorator": "^1.6.0",
     "yargs": "^13.2.4"
   }
 }

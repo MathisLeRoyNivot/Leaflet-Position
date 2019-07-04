@@ -94,13 +94,27 @@ $(document).ready(() => {
         let polyline = L.polyline(latLngs, {
             color: 'blue'
         }).addTo(markerGroup);
-        // var decorator = L.polylineDecorator(polyline, {
-        //     patterns: [
-        //         {offset: '100%', repeat: 0, symbol: L.Symbol.arrowHead({pixelSize: 15, polygon: false, pathOptions: {stroke: true}})}
-        //     ]
-        // }).addTo(markerGroup);
-        // .addTo(map)
 
+        L.polylineDecorator(polyline, {
+            patterns: [
+                {
+                    offset: 0, 
+                    repeat: 75, 
+                    symbolOffset: 10, 
+                    symbol: L.Symbol.arrowHead({
+                        polygon: false,
+                        headAngle: 45,
+                        pixelSize: 15,
+                        pathOptions: {
+                            opacity: 1, 
+                            weight: 2, 
+                            stroke: true, 
+                            color:'#000000'
+                        }
+                    })
+                }
+            ]
+        }).addTo(markerGroup);
 
         // zoom the map to the polyline
         map.fitBounds(polyline.getBounds());
@@ -215,16 +229,28 @@ $(document).ready(() => {
                         let polylineFiltered = L.polyline(latLngsFiltered, {
                             color: 'red'
                         }).addTo(markerGroupFiltered);
-                        // var decorator = L.polylineDecorator(polyline, {
-                        //     patterns: [
-                        //         // defines a pattern of 10px-wide dashes, repeated every 20px on the line
-                        //         {
-                        //             offset: '100%', 
-                        //             repeat: 0, 
-                        //             symbol: L.Symbol.arrowHead({pixelSize: 15, polygon: false, pathOptions: {stroke: true}})}
-                        //     ]
-                        // }).addTo(markerGroupFiltered);
-                        // .addTo(map)
+                        
+                        L.polylineDecorator(polylineFiltered, {
+                            patterns: [
+                                {
+                                    offset: 0, 
+                                    repeat: 75, 
+                                    symbolOffset: 10, 
+                                    symbol: L.Symbol.arrowHead({
+                                        polygon: false,
+                                        headAngle: 45,
+                                        pixelSize: 15,
+                                        pathOptions: {
+                                            opacity: 1, 
+                                            weight: 2, 
+                                            stroke: true, 
+                                            color:'#000000'
+                                        }
+                                    })
+                                }
+                            ]
+                        }).addTo(markerGroupFiltered);
+
                     
                         let totalDistanceFiltered = 0;
 
